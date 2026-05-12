@@ -1,20 +1,31 @@
-import{S as d,i as u}from"./assets/vendor-5ObWk2rO.js";(function(){const i=document.createElement("link").relList;if(i&&i.supports&&i.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))t(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const n of r.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&t(n)}).observe(document,{childList:!0,subtree:!0});function l(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function t(e){if(e.ep)return;e.ep=!0;const r=l(e);fetch(e.href,r)}})();function p(s){return Promise.reject(new Error("MISSING_API_KEY"))}const o=document.querySelector(".gallery"),c=document.querySelector(".loader-wrap");let a=null;function h(s){const{webformatURL:i,largeImageURL:l,tags:t="",likes:e=0,views:r=0,comments:n=0,downloads:g=0}=s,m=String(t).slice(0,200);return` 
-    <li class="gallery__item">
-        <a class="gallery__link" href="${l}" title="${m}">
-          <img
-            class="gallery__image"
-            src="${i}"
-            alt="${m}" 
-            loading="lazy" 
-            width="640" 
-            height="360" 
-            />
-          <div class="gallery__info">
-            <span class="gallery__info-item">${e}</span>
-            <span class="gallery__info-item">${r}</span>
-            <span class="gallery__info-item">${n}</span>
-            <span class="gallery__info-item">${g}</span>
-          </div>
+import{a as f,S as u,i as n}from"./assets/vendor-73qhTu8_.js";(function(){const s=document.createElement("link").relList;if(s&&s.supports&&s.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))i(t);new MutationObserver(t=>{for(const r of t)if(r.type==="childList")for(const a of r.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&i(a)}).observe(document,{childList:!0,subtree:!0});function e(t){const r={};return t.integrity&&(r.integrity=t.integrity),t.referrerPolicy&&(r.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?r.credentials="include":t.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function i(t){if(t.ep)return;t.ep=!0;const r=e(t);fetch(t.href,r)}})();const m="55821000-c477eb790cad5f38062000930",y="https://pixabay.com/api/";async function g(o){const s={key:m,q:o,image_type:"photo",orientation:"horizontal",safesearch:!0,per_page:12};try{return(await f.get(y,{params:s})).data}catch(e){throw console.error("Pixabay API error:",e),e}}const p=document.getElementById("gallery"),d=document.getElementById("loader-wrap");let h=new u(".gallery a",{captionsData:"alt",captionDelay:250,overlayOpacity:.8});function v(o){const s=o.map(e=>`
+      <li class="gallery-item">
+        <a href="${e.largeImageURL}" class="gallery-link">
+          <img 
+            src="${e.webformatURL}" 
+            alt="${e.tags}" 
+            class="gallery-image"
+            loading="lazy"
+          />
         </a>
-    </li>`}function _(s){if(!o)return;if(!Array.isArray(s)||s.length===0){o.innerHTML="",a==null||a.refresh();return}const i=s.map(h).join("");o.innerHTML=i,a?a.refresh():a=new d(".gallery a",{captionsData:"title",captionDelay:250})}function P(){o&&(o.innerHTML="")}function I(){c&&c.classList.remove("is-hidden")}function y(){c&&c.classList.add("is-hidden")}const f=document.querySelector(".form");function S(s){s.preventDefault();const i=f.querySelector("input[name='search-text']");i&&i.value.trim()&&(I(),P(),p().then(t=>{if(y(),!t||!Array.isArray(t.hits)){u.error({title:"Error",message:"Sorry, there are no images matching your search query. Please try again!",position:"topRight",timeout:5e3});return}if(t.hits.length===0){u.error({title:"Error",message:"Sorry, there are no images matching your search query. Please try again!",position:"topRight",timeout:5e3});return}_(t.hits)}).catch(t=>{var r,n;y();let e="Something went wrong. Please try again.";t.message==="MISSING_API_KEY"?e="Pixabay API key is missing. Create .env and add VITE_PIXABAY_API_KEY=your_key (get key: https://pixabay.com/api/docs/)":((r=t.response)==null?void 0:r.status)===429?e="Too many requests. Please wait and try again later.":((n=t.response)==null?void 0:n.status)===400?e="Invalid request (e.g. missing API key). Check .env and VITE_PIXABAY_API_KEY.":t.message&&(e=t.message),u.error({title:"Error",message:e,position:"topRight",timeout:5e3})}))}f&&f.addEventListener("submit",S);
+        <div class="info">
+          <div class="info-item">
+            <span class="info-label">Likes</span>
+            <span class="info-value">${e.likes.toLocaleString()}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Views</span>
+            <span class="info-value">${e.views.toLocaleString()}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Comments</span>
+            <span class="info-value">${e.comments.toLocaleString()}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Downloads</span>
+            <span class="info-value">${e.downloads.toLocaleString()}</span>
+          </div>
+        </div>
+      </li>
+    `).join("");p.innerHTML=s,h.refresh()}function L(){p.innerHTML=""}function w(){d.classList.add("show")}function l(){d.classList.remove("show")}const b=document.getElementById("search-form"),c=document.getElementById("search-input");b.addEventListener("submit",async o=>{o.preventDefault();const s=c.value.trim();if(s===""){n.error({title:"Error",message:"Please enter a search query!",position:"topRight"}),c.focus();return}L(),w();try{const e=await g(s);if(l(),e.hits.length===0){n.info({title:"",message:"Sorry, there are no images matching your search query. Please try again!",position:"topRight"});return}v(e.hits)}catch(e){l(),n.error({title:"Error",message:"Something went wrong. Please try again later.",position:"topRight"}),console.error(e)}});
 //# sourceMappingURL=index.js.map
